@@ -23,7 +23,7 @@ mongoose.connect("mongodb+srv://philemonkomi46:j2yx3KMIiaXnG7qV@backenddb.uaor4.
 })
 
 
-//API's
+//API's Endpoints
 app.get('/', (req, res) => {
     res.send("HELLO FROM BACKEND SERVER");
 });
@@ -38,4 +38,4 @@ app.post('/api/products', async (req, res) => {   //whenever we use await, we us
     }
 });
 
-    //API to view all my created 
+    //API to view all my created Products
