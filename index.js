@@ -38,4 +38,12 @@ app.post('/api/products', async (req, res) => {   //whenever we use await, we us
     }
 });
 
-    //API to view all my created Products
+//API to Get and View all my created Products
+app.get('/api/products', async(req, res) => {
+    try {
+        const products = await Product.find({});       //finds the products in the database
+        res.status(200).send(products)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
