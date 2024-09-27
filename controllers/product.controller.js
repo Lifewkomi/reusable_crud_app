@@ -1,6 +1,6 @@
-import Product from "../models/product.model";
+import Product from "../models/product.model.js";
 
-const getProducts = async(req, res) => {
+export const getProducts = async(req, res) => {
     try {
       const products = await Product.find({}); //finds all  products in the database
       res.status(200).send(products);
@@ -9,7 +9,7 @@ const getProducts = async(req, res) => {
     }
 } 
 
-const getProduct = async(req, res) => {
+export const getProduct = async(req, res) => {
     try {
         const { id } = req.params;
         const product = await Product.findById(id);//finds a specific product
@@ -19,7 +19,7 @@ const getProduct = async(req, res) => {
       }
 }
 
-const createProduct = async(req,res) => {
+export const createProduct = async(req,res) => {
     try {
         const product = await Product.create(req.body); //takes time to analyze
         res.status(200).send(product);
@@ -29,10 +29,10 @@ const createProduct = async(req,res) => {
       }
 }
 
-const updateProduct = async(req, res) => {
+export const updateProduct = async(req, res) => {
     try {
         const { id } = req.params;
-        const product = await Product.findByIDAndUpdate(id, req.body);
+        const product = await Product.findByIdAndUpdate(id, req.body);
         if (!product) {
           return res.status(404).send("Product Not Found!");
         }
@@ -43,10 +43,10 @@ const updateProduct = async(req, res) => {
       }
 }
 
-const deleteProduct = async(req, res) => {
+export const deleteProduct = async(req, res) => {
     try {
         const { id } = req.params;
-        const product = await Product.findByIDAndDelete(id);
+        const product = await Product.findByIdAndDelete(id);
     
         if (!product) {
           res.status(400).send({ error: "Product not found" });
@@ -57,7 +57,8 @@ const deleteProduct = async(req, res) => {
       }
 }
 
-module.exports = {
+//Exporting multiple defaults in ES6+
+export default {
     getProduct, 
     getProducts,
     createProduct,
