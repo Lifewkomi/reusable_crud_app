@@ -5,7 +5,8 @@ import Product from "./models/product.model.js";
 const app = express();
 
 //MIDDLEWARES
-app.use(express.json());
+app.use(express.json()); //allows us to add items to body in json format
+app.use(express.urlencoded({extended: false})) //allows us to add items to body in form format
 
 //MONGOOSE CONNECTION
 const port = 9073;
@@ -88,3 +89,19 @@ app.put('/api/product/:id', async(req,res) => {
   }
 })
 
+//DELETE API
+app.delete('/api/product/:id', async (req,res) => {
+  try {
+    
+    const {id} = req.params;
+    const product = await Product.findByIDAndDelete(id)
+
+    if(!product){
+      res.status(400).send({error: "Product not found"})
+    }
+    res.status(200).send({message: "Product deleted successfully!"})
+
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
