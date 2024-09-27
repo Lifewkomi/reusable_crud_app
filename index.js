@@ -24,10 +24,38 @@ mongoose
   });
 
 //API's Endpoints
+
 app.get("/", (req, res) => {
   res.send("HELLO FROM BACKEND SERVER");
 });
 
+//CRUD - create(post), read(get), update(put), delete(delete)
+
+//Read APIs
+//GET APIS
+//API to Get and View all my created Products
+app.get("/api/products", async (req, res) => {
+  try {
+    const products = await Product.find({}); //finds the products in the database
+    res.status(200).send(products);
+  } catch (error) {
+    res.status(500).send(error);
+  } 
+});
+
+//API to Get and View a specific Product
+app.get("/api/products/:id", async (req, res) => {
+  try {
+    const { id } = req.params
+    const product = await Product.findById(id)
+    res.status(200).send(product)
+  } catch (error) {
+    res.status(500).send(error);
+  } 
+});
+
+//CREATE APIs(post methods)
+//POST APIs
 app.post("/api/products", async (req, res) => {
   //whenever we use await, we use async function
   try {
@@ -39,12 +67,8 @@ app.post("/api/products", async (req, res) => {
   }
 });
 
-//API to Get and View all my created Products
-app.get("/api/products", async (req, res) => {
-  try {
-    const products = await Product.find({}); //finds the products in the database
-    res.status(200).send(products);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+app.post('/api/products' ,async(req,res) => {
+
+})
+
+
