@@ -32,6 +32,7 @@ app.get("/", (req, res) => {
 //CRUD - create(post), read(get), update(put), delete(delete)
 
 //Read APIs
+
 //GET APIS
 //API to Get and View all my created Products
 app.get("/api/products", async (req, res) => {
@@ -44,7 +45,7 @@ app.get("/api/products", async (req, res) => {
 });
 
 //API to Get and View a specific Product
-app.get("/api/products/:id", async (req, res) => {
+app.get("/api/product/:id", async (req, res) => {
   try {
     const { id } = req.params
     const product = await Product.findById(id)
@@ -55,6 +56,7 @@ app.get("/api/products/:id", async (req, res) => {
 });
 
 //CREATE APIs(post methods)
+
 //POST APIs
 app.post("/api/products", async (req, res) => {
   //whenever we use await, we use async function
@@ -67,8 +69,22 @@ app.post("/api/products", async (req, res) => {
   }
 });
 
-app.post('/api/products' ,async(req,res) => {
 
+//UPDATE API
+
+//PUT API
+app.put('/api/product/:id', async(req,res) => {
+  try {
+     const {id} = req.params;
+     const product = await Product.findByIDAndUpdate(id, req.body)
+     if(!product){
+      return res.status(404).send("Product Not Found!")
+     }
+     const updatedProduct = await Product.findById(id);
+     res.status(200).send(updatedProduct);
+    
+  } catch (error) {
+    res.status(500).send(error)
+  }
 })
-
 
